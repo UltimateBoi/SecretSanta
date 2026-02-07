@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secret Santa Name Grouper</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 200px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #results {
+            margin-top: 20px;
+        }
+        .assignment {
+            background-color: #f9f9f9;
+            padding: 10px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Secret Santa Name Grouper</h1>
+    <p>Enter the names, one per line:</p>
+    <textarea id="namesInput" placeholder="Enter names here..."></textarea>
+    <br>
+    <button onclick="generateAssignments()">Generate Assignments</button>
+    <div id="results"></div>
+
+    <script>
+        function generateAssignments() {
+            const namesText = document.getElementById('namesInput').value.trim();
+            if (!namesText) {
+                alert('Please enter some names.');
+                return;
+            }
+            const names = namesText.split('\n').map(name => name.trim()).filter(name => name);
+            if (names.length < 2) {
+                alert('Please enter at least 2 names.');
+                return;
+            }
+
+            // Shuffle the names
+            const shuffled = [...names];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+
+            // Create assignments
+            const assignments = {};
+            for (let i = 0; i < shuffled.length; i++) {
+                const giver = shuffled[i];
+                const receiver = shuffled[(i + 1) % shuffled.length];
+                assignments[giver] = receiver;
+            }
+
+            // Display results
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '<h2>Assignments:</h2>';
+            for (const giver in assignments) {
+                const div = document.createElement('div');
+                div.className = 'assignment';
+                div.textContent = `${giver} gives to ${assignments[giver]}`;
+                resultsDiv.appendChild(div);
+            }
+        }
+    </script>
+</body>
+</html></content>
+<parameter name="filePath">c:\Users\Ultimate\Documents\ranNamePair\index.html
